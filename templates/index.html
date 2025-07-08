@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CineVerse AI</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .projector {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .projector img {
+        width: 200px;
+        animation: pulse 2s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.9;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #141e30, #243b55);
+        color: white;
+        text-align: center;
+      }
+
+      h1 {
+        margin-top: 2rem;
+        font-size: 2.5rem;
+        background: linear-gradient(to right, #ff512f, #dd2476);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      form {
+        margin-top: 2rem;
+      }
+
+      input,
+      select,
+      button {
+        padding: 0.8rem;
+        font-size: 1rem;
+        margin: 0.5rem;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+      }
+
+      button {
+        background: linear-gradient(to right, #ff4b2b, #ff416c);
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+      }
+
+      .recommendations {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 3rem;
+        gap: 1rem;
+      }
+
+      .poster-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        width: 180px;
+      }
+
+      .poster-card img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .extra-actions {
+        margin-top: 3rem;
+      }
+
+      .extra-actions button {
+        margin: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CineVerse AI 🎬</h1>
+    <div class="projector">
+      <img
+        src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWdrMm5wNzNkNHU3ajAxMTVkYW4wNmI2MmFsMDI5ZjVtOGVoY2FlbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yoJC2ygNZB12dFVcI0/giphy.gif"
+        alt="Projector Animation"
+      />
+    </div>
+
+    <form action="/recommend" method="POST">
+      <input
+        type="text"
+        name="title"
+        placeholder="Enter movie title"
+        required
+      />
+      <select name="language">
+        <option value="hindi">Hindi</option>
+        <option value="telugu">Telugu</option>
+        <option value="english">English</option>
+      </select>
+      <button type="submit">Get Recommendations</button>
+    </form>
+
+    <div class="recommendations">
+      <!-- Dynamically insert recommended movie posters with Flask -->
+      <!-- Example:
+      <div class="poster-card">
+        <img src="poster_url_here" alt="Movie Poster">
+        <p><strong>Movie Title</strong></p>
+      </div>
+      -->
+    </div>
+
+    <div class="extra-actions">
+      <button onclick="location.href='/quiz'">🎥 Take Quiz</button>
+      <button onclick="location.href='/chatbot'">🤖 Talk to AI</button>
+      <button onclick="location.href='https://www.youtube.com/'">
+        ▶️ Watch Trailer
+      </button>
+    </div>
+  </body>
+</html>

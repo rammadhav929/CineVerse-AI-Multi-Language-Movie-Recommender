@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineVerse AI</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Montserrat", sans-serif;
+        color: white;
+        background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 2rem;
+      }
+
+      h1 {
+        font-size: 3rem;
+        background: linear-gradient(to right, #ff512f, #dd2476);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border: none;
+        margin: 1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: white;
+        background: #ff416c;
+        background: linear-gradient(to right, #ff4b2b, #ff416c);
+        border-radius: 30px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(255, 65, 108, 0.5);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .footer {
+        position: absolute;
+        bottom: 10px;
+        font-size: 0.9rem;
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <h1>CineVerse AI</h1>
+      <p>
+        Experience smart, multi-language movie recommendations powered by AI
+      </p>
+      <div class="actions">
+        <button class="btn" onclick="location.href='/index'">
+          🎬 Get Recommendations
+        </button>
+        <button class="btn" onclick="location.href='/quiz'">
+          🧠 AI Taste Quiz
+        </button>
+        <button class="btn" onclick="location.href='/chatbot'">
+          🤖💬 Talk to CineBot
+        </button>
+      </div>
+    </div>
+    <div class="footer">© 2025 CineVerse AI | Ram Madhav</div>
+  </body>
+</html>

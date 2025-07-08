@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recommendations | CineVerse AI</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat", sans-serif;
+        background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+        color: white;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 2.2rem;
+        background: linear-gradient(to right, #f7971e, #ffd200);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: auto;
+        padding: 2rem;
+      }
+
+      .movie {
+        display: flex;
+        gap: 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        align-items: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .movie img,
+      .placeholder-img {
+        width: 120px;
+        height: 180px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+
+      .placeholder-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #555;
+        color: #ccc;
+        font-size: 0.9rem;
+        font-style: italic;
+        text-align: center;
+      }
+
+      .movie-details {
+        flex: 1;
+      }
+
+      .movie-details h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.3rem;
+      }
+
+      .movie-details p {
+        font-size: 0.95rem;
+        color: #dddddd;
+        margin-bottom: 1rem;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .buttons button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        background: linear-gradient(to right, #ff4b2b, #ff416c);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .buttons button:hover {
+        transform: scale(1.05);
+      }
+
+      .footer-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .footer-actions a button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        background: linear-gradient(to right, #00b09b, #96c93d);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .footer-actions a button:hover {
+        transform: scale(1.05);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding-top: 100px;
+      }
+      .modal-content {
+        background-color: #111;
+        margin: auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        position: relative;
+        box-shadow: 0 0 10px black;
+      }
+      .close {
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        color: white;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Recommendations for "{{ movie }}" ({{ language.title() }})</h1>
+    <div class="container">
+      {% if error %}
+      <p style="color: red">{{ error }}</p>
+      {% else %} {% for movie, poster in results %}
+      <div class="movie">
+        {% if poster %}
+        <img src="{{ poster }}" alt="Poster" />
+        {% else %}
+        <div class="placeholder-img">No Image Available</div>
+        {% endif %}
+        <div class="movie-details">
+          <h3>{{ movie.title }}</h3>
+          <p>{{ movie.combined[:250] if movie.combined else '' }}...</p>
+          <div class="buttons">
+            <button onclick="openModal('{{ movie.title }}')">
+              ▶️ Watch Trailer
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% endif %}
+
+      <div class="footer-actions">
+        <a href="/">
+          <button>🔙 Go back to home</button>
+        </a>
+        <a href="/chatbot">
+          <button>🤖 Talk to AI</button>
+        </a>
+      </div>
+    </div>
+
+    <!-- Trailer Modal -->
+    <div id="trailerModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <iframe
+          id="trailerFrame"
+          width="100%"
+          height="400"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <script>
+      function openModal(title) {
+        const modal = document.getElementById("trailerModal");
+        const frame = document.getElementById("trailerFrame");
+        fetch(`/trailer_url?title=${encodeURIComponent(title)}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.url) {
+              frame.src = data.url;
+              modal.style.display = "block";
+            } else {
+              alert("Trailer not found.");
+            }
+          });
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("trailerModal");
+        modal.style.display = "none";
+        document.getElementById("trailerFrame").src = "";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Assistant | CineVerse AI</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        background: linear-gradient(to right, #141e30, #243b55);
+        color: white;
+        margin: 0;
+        padding: 0;
+      }
+      .chat-container {
+        max-width: 700px;
+        margin: 3rem auto;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+      h1 {
+        text-align: center;
+        background: linear-gradient(to right, #ff512f, #dd2476);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .chat-box {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 1.5rem;
+      }
+      .chat-message {
+        margin-bottom: 1rem;
+      }
+      .bot {
+        color: #ffd700;
+      }
+      .user {
+        color: #9be7ff;
+        text-align: right;
+      }
+      form {
+        display: flex;
+        gap: 1rem;
+      }
+      input[type="text"] {
+        flex: 1;
+        padding: 0.7rem;
+        border-radius: 8px;
+        border: none;
+        font-size: 1rem;
+      }
+      button {
+        padding: 0.7rem 1.2rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        background: linear-gradient(to right, #ff4b2b, #ff416c);
+        color: white;
+      }
+      .final-result {
+        margin-top: 2rem;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <h1>{{ title }}</h1>
+      <div class="chat-box">
+        {% for message in messages %}
+        <div class="chat-message {{ message.sender }}">
+          <strong>{{ message.sender|capitalize }}:</strong> {{ message.text }}
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if not result %}
+      <form action="{{ action_url }}" method="POST">
+        <input
+          type="text"
+          name="user_input"
+          placeholder="Type your message..."
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+      {% endif %} {% if result %}
+      <div class="final-result">
+        <h3>🎯 Final Response:</h3>
+        <p>{{ result }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
